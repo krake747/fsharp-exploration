@@ -103,3 +103,10 @@ let pipeline =
     |> multiply 2
 
 printfn $"Pipeline result is {pipeline}"
+
+let addFiveAndDouble input =
+    input
+    |> add 5
+    |> multiply 2
+    
+let addFiveAndDoubleShort = add 5 >> multiply 2
