@@ -10,11 +10,7 @@ let greeting = greetPerson name time
 
 printfn $"{greeting}"
 
-// Type inference
-let add a b =
-    let answer = a + b
-    answer
-    
+// Type inference   
 let calculateGroup age = 
     if age < 18 then "Child"
     elif age < 65 then "Adult"
@@ -37,18 +33,21 @@ let yesterday = (getTheCurrentTime ()).AddDays(-1)
 printfn $"{now} and {yesterday}"
 
 // Mutable state with mutable variables
-let drive gas distance =
+let drive distance gas =
     if distance > 50 then gas / 2.0
     elif distance > 25 then gas - 10.0
     elif distance > 0 then gas - 1.0
     else gas
 
-let gas = 100.0 
-let firstState = drive gas 55
-let secondState = drive firstState 36
-let finalState = drive secondState 5
-  
-printfn $"Gas: {finalState}"
+let gas = 100.0
+
+let remainingGas =
+    gas
+    |> drive 55
+    |> drive 26
+    |> drive 1
+
+printfn $"Gas: {remainingGas}"
 
 // Records
 type Address = {
@@ -87,3 +86,20 @@ let generatePerson theAddress =
         
 let person = generatePerson theAddress
 printfn $"{person}"
+
+// Currying and Partial Application
+
+let add a b = a + b
+let multiply a b = a * b    
+    
+let addFive = add 5
+let res = addFive 10
+printfn $"{res}"
+
+let pipeline =
+    10
+    |> add 5
+    |> add 7
+    |> multiply 2
+
+printfn $"Pipeline result is {pipeline}"
