@@ -10,23 +10,26 @@ let greeting = greetPerson name time
 
 printfn $"{greeting}"
 
-// Type inference   
-let calculateGroup age = 
+// Type inference
+let calculateGroup age =
     if age < 18 then "Child"
     elif age < 65 then "Adult"
     else "Pensioner"
-    
+
 let sayHello someValue =
     let group =
-        if someValue < 10.0 then calculateGroup 15
-        else calculateGroup 35
+        if someValue < 10.0 then
+            calculateGroup 15
+        else
+            calculateGroup 35
+
     "Hello " + group
-    
+
 let result = sayHello 10.5
 printfn $"{result}"
 
 // Unit as an input
-let getTheCurrentTime () = DateTime.Now 
+let getTheCurrentTime () = DateTime.Now
 let now = getTheCurrentTime ()
 let yesterday = (getTheCurrentTime ()).AddDays(-1)
 
@@ -51,45 +54,41 @@ let theAddress = {
     City = "London"
     Country = "UK"
 }
+
 let addressInDE = {
     theAddress with
         City = "Berlin"
-        Country = "DE" 
+        Country = "DE"
 }
 
 let generatePerson theAddress =
-    if theAddress.Country = "UK" then {
-        Name = "David", "Beckham"
-        Address = theAddress 
-    }
-    else {
-        Name = "John", "Doe"
-        Address = theAddress 
-    }
-        
+    if theAddress.Country = "UK" then
+        {
+            Name = "David", "Beckham"
+            Address = theAddress
+        }
+    else
+        {
+            Name = "John", "Doe"
+            Address = theAddress
+        }
+
 let person = generatePerson theAddress
 printfn $"{person}"
 
 // Currying and Partial Application
 
 let add a b = a + b
-let multiply a b = a * b    
-    
+let multiply a b = a * b
+
 let addFive = add 5
 let res = addFive 10
 printfn $"{res}"
 
-let pipeline =
-    10
-    |> add 5
-    |> add 7
-    |> multiply 2
+let pipeline = 10 |> add 5 |> add 7 |> multiply 2
 
 printfn $"Pipeline result is {pipeline}"
 
-let addFiveAndDouble input =
-    input
-    |> add 5
-    |> multiply 2
-    
+let addFiveAndDouble input = input |> add 5 |> multiply 2
+
 let addFiveAndDoubleShort = add 5 >> multiply 2

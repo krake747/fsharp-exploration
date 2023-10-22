@@ -8,5 +8,7 @@ let parsed, distance = Console.ReadLine() |> Int32.TryParse
 let startGas = 8.0
 let remainingGas = startGas |> Car.drive distance
 
-if remainingGas.IsOutOfGas then printfn "You are out of gas!"
-else printfn $"You have {remainingGas.GasLeft} gas left."
+if remainingGas.IsOutOfGas then
+    printfn "You are out of gas!"
+else
+    printfn $"You have {remainingGas.GasLeft} gas left."
