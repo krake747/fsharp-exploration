@@ -17,11 +17,7 @@ let calculateGroup age =
     else "Pensioner"
 
 let sayHello someValue =
-    let group =
-        if someValue < 10.0 then
-            calculateGroup 15
-        else
-            calculateGroup 35
+    let group = if someValue < 10.0 then calculateGroup 15 else calculateGroup 35
 
     "Hello " + group
 
@@ -36,21 +32,11 @@ let yesterday = (getTheCurrentTime ()).AddDays(-1)
 printfn $"{now} and {yesterday}"
 
 // Records
-type Address = {
-    Line1: string
-    Line2: string
-    City: string
-    Country: string
-}
+type Address = { Line1: string; Line2: string; City: string; Country: string }
 
 type Person = { Name: string * string; Address: Address }
 
-let theAddress = {
-    Line1 = "1st Street"
-    Line2 = "Apt. 1"
-    City = "London"
-    Country = "UK"
-}
+let theAddress = { Line1 = "1st Street"; Line2 = "Apt. 1"; City = "London"; Country = "UK" }
 
 let addressInDE = { theAddress with City = "Berlin"; Country = "DE" }
 
@@ -95,21 +81,11 @@ let multiply5And6 = executeCalculation multiply "multiply" 5 6
 // let calculation = executeCalculation writeToFile 10 20
 
 // Functional Collection pipelines
-type Result = {
-    HomeTeam: string
-    HomeGoals: int
-    AwayTeam: string
-    AwayGoals: int
-}
+type Result = { HomeTeam: string; HomeGoals: int; AwayTeam: string; AwayGoals: int }
 
 type TeamSummary = { Name: string; mutable AwayWins: int }
 
-let create home hg away ag = {
-    HomeTeam = home
-    HomeGoals = hg
-    AwayTeam = away
-    AwayGoals = ag
-}
+let create home hg away ag = { HomeTeam = home; HomeGoals = hg; AwayTeam = away; AwayGoals = ag }
 
 let results = [
     create "Messiville" 1 "Ronaldo City" 2
@@ -173,11 +149,7 @@ let description =
     | _ -> "Some modifier was pressed"
 
 
-type CustomerDetails = {
-    YearsOfHistory: int
-    HasOverdraft: bool
-    Overdraft: decimal
-}
+type CustomerDetails = { YearsOfHistory: int; HasOverdraft: bool; Overdraft: decimal }
 
 let customerDetailsRecord = { YearsOfHistory = 1; HasOverdraft = true; Overdraft = 400m }
 
@@ -197,19 +169,11 @@ let canTakeOutALoanRecord =
 printfn $"Customer is eligible for loan {canTakeOutALoanRecord}"
 // Look at sth called 'Active Patterns' to simplify more complex matching
 
-type OverdraftDetails = {
-    Approved: bool
-    MaxAmount: decimal
-    CurrentAmount: decimal
-}
+type OverdraftDetails = { Approved: bool; MaxAmount: decimal; CurrentAmount: decimal }
 
 type CustomerAddress = { Country: string }
 
-type CustomerWithOverdraft = {
-    YearsOfHistory: int
-    Overdraft: OverdraftDetails
-    Address: CustomerAddress
-}
+type CustomerWithOverdraft = { YearsOfHistory: int; Overdraft: OverdraftDetails; Address: CustomerAddress }
 
 let canTakeOutALoanRecursive (customer: CustomerWithOverdraft) =
     match customer with
@@ -248,4 +212,9 @@ let summariseLoanRequests requests =
     | { IsLargeRequest = false } :: remainingItems -> "Several"
     | _ :: { HasOverdraft = true } :: _ -> "Second item has an overdraft"
     | _ -> "Anything else"
-    
+
+// Discriminated Union
+type ContactMethod =
+    | Email of address: string
+    | Telephone of country: string * number: string
+    | Post of {| Line1: string; Line2: string; City: string; Country: string |}
