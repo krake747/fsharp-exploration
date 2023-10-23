@@ -160,7 +160,7 @@ let processInputCommands commands =
         elif cmd = 'd' then printfn "Depositing money!"
         else printfn $"You executed command {cmd}")
 
-userInput |> processInputCommands
+// userInput |> processInputCommands
 
 // Pattern Matching
 let value = ConsoleModifiers.Alt
@@ -179,11 +179,19 @@ type CustomerDetails = {
     Overdraft: double
 }
 
-let customerDetailsRecord = { YearsOfHistory = 1; HasOverdraft = true; Overdraft = 600 }
+let customerDetailsRecord = { YearsOfHistory = 1 ; HasOverdraft = true ; Overdraft = 400 }
+
+let overdraftLimit customerDetails =
+    (customerDetails.YearsOfHistory |> double) * 250.0 > customerDetails.Overdraft 
 
 let canTakeOutALoanRecord =
+    let hasLargeOverdraft = overdraftLimit customerDetailsRecord
     match customerDetailsRecord with
     | { YearsOfHistory = 0 } -> false
-    | { YearsOfHistory = 1; HasOverdraft = true } when customerDetailsRecord.Overdraft > 500 -> false
-    | { YearsOfHistory = 1; HasOverdraft = false } -> true
+    | { YearsOfHistory = 1; HasOverdraft = true } when hasLargeOverdraft = true -> false
+    | { YearsOfHistory = 2; HasOverdraft = true } when hasLargeOverdraft = true -> false
+    | { YearsOfHistory = 2; HasOverdraft = false } -> true
     | _ -> true
+
+printfn $"Customer is eligible for loan {canTakeOutALoanRecord}"
+// Look at sth called 'Active Patterns' to simplify more complex matching
