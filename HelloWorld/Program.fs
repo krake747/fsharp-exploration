@@ -202,16 +202,20 @@ type OverdraftDetails = {
     CurrentAmount: decimal
 }
 
+type CustomerAddress = {
+    Country: string
+}
+
 type CustomerWithOverdraft = {
     YearsOfHistory: int
     Overdraft: OverdraftDetails
+    Address: CustomerAddress
 }
 
 let canTakeOutALoanRecursive (customer: CustomerWithOverdraft) =
     match customer with
-    | { YearsOfHistory = 0; Overdraft = { Approved = true } } -> true
-    | { YearsOfHistory = 0 } -> false
-    | { YearsOfHistory = 1; Overdraft = { Approved = true } } -> true
-    | { YearsOfHistory = 1 } -> false
+    | { YearsOfHistory = 0 | 1 ; Overdraft = { Approved = true }; Address = { Country = "US" } } -> true
+    | { YearsOfHistory = 0 | 1 } -> false
+    | { Address = { Country = "US" } } -> true
     | _ -> true
 
