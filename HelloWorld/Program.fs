@@ -181,7 +181,7 @@ type CustomerDetails = {
 
 let customerDetailsRecord = { YearsOfHistory = 1 ; HasOverdraft = true ; Overdraft = 400 }
 
-let overdraftLimit customerDetails =
+let overdraftLimit (customerDetails: CustomerDetails) =
     (customerDetails.YearsOfHistory |> double) * 250.0 > customerDetails.Overdraft 
 
 let canTakeOutALoanRecord =
@@ -195,3 +195,23 @@ let canTakeOutALoanRecord =
 
 printfn $"Customer is eligible for loan {canTakeOutALoanRecord}"
 // Look at sth called 'Active Patterns' to simplify more complex matching
+
+type OverdraftDetails = {
+    Approved: bool
+    MaxAmount: decimal
+    CurrentAmount: decimal
+}
+
+type CustomerWithOverdraft = {
+    YearsOfHistory: int
+    Overdraft: OverdraftDetails
+}
+
+let canTakeOutALoanRecursive (customer: CustomerWithOverdraft) =
+    match customer with
+    | { YearsOfHistory = 0; Overdraft = { Approved = true } } -> true
+    | { YearsOfHistory = 0 } -> false
+    | { YearsOfHistory = 1; Overdraft = { Approved = true } } -> true
+    | { YearsOfHistory = 1 } -> false
+    | _ -> true
+
