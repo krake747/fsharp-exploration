@@ -43,10 +43,7 @@ type Address = {
     Country: string
 }
 
-type Person = {
-    Name: string * string
-    Address: Address
-}
+type Person = { Name: string * string; Address: Address }
 
 let theAddress = {
     Line1 = "1st Street"
@@ -55,23 +52,13 @@ let theAddress = {
     Country = "UK"
 }
 
-let addressInDE = {
-    theAddress with
-        City = "Berlin"
-        Country = "DE"
-}
+let addressInDE = { theAddress with City = "Berlin"; Country = "DE" }
 
 let generatePerson theAddress =
     if theAddress.Country = "UK" then
-        {
-            Name = "David", "Beckham"
-            Address = theAddress
-        }
+        { Name = "David", "Beckham"; Address = theAddress }
     else
-        {
-            Name = "John", "Doe"
-            Address = theAddress
-        }
+        { Name = "John", "Doe"; Address = theAddress }
 
 let person = generatePerson theAddress
 printfn $"{person}"
@@ -115,7 +102,7 @@ type Result = {
     AwayGoals: int
 }
 
-type TeamSummary = { Name: string ; mutable AwayWins: int }
+type TeamSummary = { Name: string; mutable AwayWins: int }
 
 let create home hg away ag = {
     HomeTeam = home
@@ -148,14 +135,8 @@ let ronaldoCityCount =
 let scoredMost =
     results
     |> List.collect (fun x -> [
-        {|
-            Team = x.HomeTeam
-            Goals = x.HomeGoals
-        |}
-        {|
-            Team = x.AwayTeam
-            Goals = x.AwayGoals
-        |}
+        {| Team = x.HomeTeam; Goals = x.HomeGoals |}
+        {| Team = x.AwayTeam; Goals = x.AwayGoals |}
     ])
     |> List.groupBy (fun x -> x.Team)
     |> List.map (fun (team, games) -> team, games |> List.sumBy (fun game -> game.Goals))
@@ -180,3 +161,29 @@ let processInputCommands commands =
         else printfn $"You executed command {cmd}")
 
 userInput |> processInputCommands
+
+// Pattern Matching
+let value = ConsoleModifiers.Alt
+
+let description =
+    match value with
+    | ConsoleModifiers.Alt -> "Alt was pressed."
+    | ConsoleModifiers.Control -> "You hit control!"
+    | ConsoleModifiers.Shift -> "Shift held down..."
+    | _ -> "Some modifier was pressed"
+
+
+type CustomerDetails = {
+    YearsOfHistory: int
+    HasOverdraft: bool
+    Overdraft: double
+}
+
+let customerDetailsRecord = { YearsOfHistory = 1; HasOverdraft = true; Overdraft = 600 }
+
+let canTakeOutALoanRecord =
+    match customerDetailsRecord with
+    | { YearsOfHistory = 0 } -> false
+    | { YearsOfHistory = 1; HasOverdraft = true } when customerDetailsRecord.Overdraft > 500 -> false
+    | { YearsOfHistory = 1; HasOverdraft = false } -> true
+    | _ -> true
