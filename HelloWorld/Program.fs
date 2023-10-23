@@ -268,3 +268,16 @@ let sendTo customer message =
     | Post foo -> failwith "todo"
     | Sms (International (code, intNumber)) ->  $"Texting local number {code}{intNumber}" 
     | Sms (Local number) -> $"Texting local number {number}" 
+
+type PhoneNumber = PhoneNumber of string
+type CountryCode = CountryCode of string 
+
+type TelephoneNumberRevised =
+    | Local of PhoneNumber
+    | International of CountryCode * PhoneNumber
+
+let localNumber = Local (PhoneNumber "123-456")
+let internationalNumber =
+    let countryCode = CountryCode "+44"
+    let phoneNumber = PhoneNumber "208-123-4567"
+    International (countryCode, phoneNumber)
