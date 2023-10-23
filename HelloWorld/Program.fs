@@ -214,7 +214,57 @@ let summariseLoanRequests requests =
     | _ -> "Anything else"
 
 // Discriminated Union
+
+type TelephoneNumber =
+    | Local of number: string
+    | International of countryCode: string * number: string
+
 type ContactMethod =
     | Email of address: string
     | Telephone of country: string * number: string
     | Post of {| Line1: string; Line2: string; City: string; Country: string |}
+    | Sms of TelephoneNumber
+
+type Customer = {
+    Name: string
+    Age: int
+    ContactMethod: ContactMethod
+}
+
+let smsContact = Sms (Local "123-4567")
+let smsInternationalContact = Sms (International ("+365", "123-4567"))
+let isaacEmail = Email "isaac@myemailaddress.com"
+let isaacPhone = Telephone("UK", "020-8123-4567")
+let isaacPost =
+    Post {|
+        Line1 = "1 The Street"
+        Line2 = "On Baker's Street"
+        City = "Munich"
+        Country = "DE"
+    |}
+
+
+
+let message = "Discriminated Unions FTW!"
+let customer = {
+    Name = "Isaac"
+    Age = 24
+    ContactMethod = isaacPost 
+}
+
+let fancyMessage = 
+    match customer.ContactMethod with 
+    | Email address -> $"Emailing '{message}' to {address}."
+    | Telephone (country, number) -> $"Calling {country}-{number} with the message '{message}'!"
+    | Post postDetails -> $"Printing a letter with contents '{message}' to {postDetails}"
+    | Sms number -> $"Sms '{message}' to {number}."
+    
+printfn $"{fancyMessage}"
+
+let sendTo customer message =
+    match customer.ContactMethod with
+    | Email address -> failwith "todo"
+    | Telephone(country, number) -> failwith "todo"
+    | Post foo -> failwith "todo"
+    | Sms (International (code, intNumber)) ->  $"Texting local number {code}{intNumber}" 
+    | Sms (Local number) -> $"Texting local number {number}" 
