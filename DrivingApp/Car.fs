@@ -1,6 +1,6 @@
 ﻿module Car
 
-type DriveResult = { GasLeft: float ; IsOutOfGas: bool }
+type DriveResult = { GasLeft: float; IsOutOfGas: bool }
 
 let drive distance gas =
     let output =
@@ -9,7 +9,4 @@ let drive distance gas =
         elif distance > 0 then gas - 1.0
         else gas
 
-    {
-        GasLeft = output
-        IsOutOfGas = output <= 0.0
-    }
+    { GasLeft = output; IsOutOfGas = output <= 0.0 }

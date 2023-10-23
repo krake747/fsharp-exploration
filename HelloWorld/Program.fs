@@ -176,16 +176,17 @@ let description =
 type CustomerDetails = {
     YearsOfHistory: int
     HasOverdraft: bool
-    Overdraft: double
+    Overdraft: decimal
 }
 
-let customerDetailsRecord = { YearsOfHistory = 1 ; HasOverdraft = true ; Overdraft = 400 }
+let customerDetailsRecord = { YearsOfHistory = 1; HasOverdraft = true; Overdraft = 400m }
 
 let overdraftLimit (customerDetails: CustomerDetails) =
-    (customerDetails.YearsOfHistory |> double) * 250.0 > customerDetails.Overdraft 
+    (customerDetails.YearsOfHistory |> decimal) * 250.0m > customerDetails.Overdraft
 
 let canTakeOutALoanRecord =
     let hasLargeOverdraft = overdraftLimit customerDetailsRecord
+
     match customerDetailsRecord with
     | { YearsOfHistory = 0 } -> false
     | { YearsOfHistory = 1; HasOverdraft = true } when hasLargeOverdraft = true -> false
@@ -202,9 +203,7 @@ type OverdraftDetails = {
     CurrentAmount: decimal
 }
 
-type CustomerAddress = {
-    Country: string
-}
+type CustomerAddress = { Country: string }
 
 type CustomerWithOverdraft = {
     YearsOfHistory: int
@@ -214,8 +213,39 @@ type CustomerWithOverdraft = {
 
 let canTakeOutALoanRecursive (customer: CustomerWithOverdraft) =
     match customer with
-    | { YearsOfHistory = 0 | 1 ; Overdraft = { Approved = true }; Address = { Country = "US" } } -> true
+    | {
+          YearsOfHistory = 0 | 1
+          Overdraft = { Approved = true }
+          Address = { Country = "US" }
+      } -> true
     | { YearsOfHistory = 0 | 1 } -> false
     | { Address = { Country = "US" } } -> true
     | _ -> true
 
+let canTakeOutALoanBinding (customer: CustomerWithOverdraft) =
+    match customer with
+    | { Overdraft = { Approved = true; CurrentAmount = amount } } ->
+        printfn $"Loan approved; current overdraft is {amount}"
+        true
+    | { Overdraft = { Approved = true } as overdraftDetails } ->
+        printfn $"Loan approved; overdraft details are {overdraftDetails}"
+        true
+    | _ -> false
+
+// Collection matching
+type LoanRequest = {
+    YearsOfHistory: int
+    HasOverdraft: bool
+    LoanRequestAmount: decimal
+    IsLargeRequest: bool
+}
+
+let summariseLoanRequests requests =
+    match requests with
+    | [] -> "No requests made!"
+    | [ { IsLargeRequest = true } ] -> "Single large request!"
+    | [ { IsLargeRequest = true }; { IsLargeRequest = true } ] -> "Two large requests"
+    | { IsLargeRequest = false } :: remainingItems -> "Several"
+    | _ :: { HasOverdraft = true } :: _ -> "Second item has an overdraft"
+    | _ -> "Anything else"
+    
