@@ -279,3 +279,86 @@ type ValidatedEmail = ValidatedEmail of Email
 
 let validateEmail (Email address) =
     if not (address.Contains "@") then failwith "Invalid email" else ValidatedEmail(Email address)
+
+type Programmer = {
+    Username: string
+    Age: int
+}
+
+let krake747 = {
+    Username = "krake747"
+    Age = 30
+}
+
+let getAge programmer =
+    programmer.Age
+    
+let classifyAge age =
+    match age with
+    | age when age < 18 -> "Child"
+    | age when age < 65 -> "Adult"
+    | _ -> "Senior"
+    
+let optionalClassification =
+    Some krake747
+    |> Option.map getAge
+    |> Option.map classifyAge
+    
+printfn $"{optionalClassification}"
+
+type CustomerId = CustomerId of string
+type Name = Name of string
+type Street = Street of string
+type City = City of string
+type Country = Domestic | Foreign of string
+type AccountBalance = AccountBalance of decimal
+
+type RawCustomer = {
+    CustomerId : string
+    Name : string
+    Street : string
+    City : string
+    Country : string
+    AccountBalance : decimal
+}
+
+type Customer2 = {
+    Id : CustomerId
+    Name : Name
+    Address : {|
+        Street : Street
+        City : City
+        Country : Country
+    |}
+    Balance : AccountBalance
+}
+
+type CustomerValidationError2 =
+    | InvalidCustomerId of string
+    | InvalidName of string
+    | InvalidCountry of string
+    
+type CustomValidationFunc = string -> Result<CustomerId, CustomerValidationError2>
+    
+let validateCustomerId (cId:string) =
+    if cId.StartsWith "C" then Ok (CustomerId cId[1..])
+    else Error (InvalidCustomerId $"Invalid Customer Id '{cId}'.") 
+
+type CustomerIdError =
+    | EmptyId
+    | InvalidIdFormat
+    
+type NameError =
+    | NoNameSupplied
+    | TooManyParts
+type CountryError =
+    | NoCountrySupplied
+type CustomerValidationError =
+    | CustomerIdError of CustomerIdError
+    | NameError of NameError
+    | CountryError of CountryError
+    
+type ValidateCustomerId = string -> Result<CustomerId, CustomerIdError> 
+type ValidateName = string -> Result<CustomerId, NameError> 
+type ValidateCountry = string -> Result<CustomerId, CountryError> 
+type ValidationRawCustomer = RawCustomer -> Result<Customer, CustomerValidationError>
