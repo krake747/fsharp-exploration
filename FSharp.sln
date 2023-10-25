@@ -7,6 +7,10 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "HelloWorld", "HelloWorld\He
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "DrivingApp", "DrivingApp\DrivingApp.fsproj", "{6166E969-D1D7-4142-8CDF-5A4FE57EDCE6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpLib", "CSharpLib\CSharpLib.csproj", "{541F35ED-E555-4B8A-A68F-63D917C7D557}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "CSharpInteropApp", "CSharpInteropApp\CSharpInteropApp.fsproj", "{43CD9722-9DC9-451D-9EFD-C36F161BAB79}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +28,13 @@ Global
 		{6166E969-D1D7-4142-8CDF-5A4FE57EDCE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6166E969-D1D7-4142-8CDF-5A4FE57EDCE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6166E969-D1D7-4142-8CDF-5A4FE57EDCE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{541F35ED-E555-4B8A-A68F-63D917C7D557}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{541F35ED-E555-4B8A-A68F-63D917C7D557}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{541F35ED-E555-4B8A-A68F-63D917C7D557}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{541F35ED-E555-4B8A-A68F-63D917C7D557}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43CD9722-9DC9-451D-9EFD-C36F161BAB79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43CD9722-9DC9-451D-9EFD-C36F161BAB79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43CD9722-9DC9-451D-9EFD-C36F161BAB79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43CD9722-9DC9-451D-9EFD-C36F161BAB79}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
