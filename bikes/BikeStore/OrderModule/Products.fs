@@ -20,11 +20,7 @@ type BikeModel = {
     Category: BikeCategory
 }
 
-type Bike = {
-    Id: BikeId
-    Model: BikeModel
-    ListPrice: Price
-}
+type Bike = { Id: BikeId; Model: BikeModel; ListPrice: Price }
 
 // ---
 // Clothing
@@ -32,6 +28,7 @@ type Bike = {
 
 [<Struct>]
 type ClothingId = ClothingId of int
+
 type ClothingBrand = ClothingBrand of string
 type ClothingCategory = ClothingCategory of string
 
@@ -47,22 +44,18 @@ type ClothingModel = {
     Category: ClothingCategory
 }
 
-type Clothing = {
-    Id: ClothingId
-    Model: ClothingModel
-    ListPrice: Price
-}
+type Clothing = { Id: ClothingId; Model: ClothingModel; ListPrice: Price }
 
 type ProductCode =
     | BikeCode of BikeId
     | ClothingCode of ClothingId
-    
+
 let failOnError result =
     match result with
-    | Ok success -> success 
-    | Error error -> failwithf $"{error}"              
+    | Ok success -> success
+    | Error error -> failwithf $"{error}"
 
-let getBikes (): Bike list = [
+let getBikes () : Bike list = [
     {
         Id = BikeId 1
         Model = {
@@ -72,7 +65,7 @@ let getBikes (): Bike list = [
             Category = CategoryName "Cross Country"
         }
         ListPrice = Price.create 5100m |> failOnError
-    };
+    }
     {
         Id = BikeId 2
         Model = {
@@ -82,7 +75,7 @@ let getBikes (): Bike list = [
             Category = CategoryName "Gravel"
         }
         ListPrice = Price.create 6600m |> failOnError
-    };
+    }
     {
         Id = BikeId 3
         Model = {
@@ -95,8 +88,8 @@ let getBikes (): Bike list = [
     }
 ]
 
-let getClothes (): Clothing list = [
-     {
+let getClothes () : Clothing list = [
+    {
         Id = ClothingId 4
         Model = {
             Name = "Puro 3 FZ"
@@ -105,7 +98,7 @@ let getClothes (): Clothing list = [
             Category = ClothingCategory "Jerseys"
         }
         ListPrice = Price.create 180m |> failOnError
-    };
+    }
     {
         Id = ClothingId 5
         Model = {
@@ -115,7 +108,7 @@ let getClothes (): Clothing list = [
             Category = ClothingCategory "Trousers"
         }
         ListPrice = Price.create 120m |> failOnError
-    };
+    }
     {
         Id = ClothingId 6
         Model = {
@@ -128,12 +121,11 @@ let getClothes (): Clothing list = [
     }
 ]
 
-let getProductCatalog (): ProductCode list = [
-    BikeCode(BikeId 1);
-    BikeCode(BikeId 2);
-    BikeCode(BikeId 3);
-    ClothingCode(ClothingId 4);
-    ClothingCode(ClothingId 5);
-    ClothingCode(ClothingId 6);
+let getProductCatalog () : ProductCode list = [
+    BikeCode(BikeId 1)
+    BikeCode(BikeId 2)
+    BikeCode(BikeId 3)
+    ClothingCode(ClothingId 4)
+    ClothingCode(ClothingId 5)
+    ClothingCode(ClothingId 6)
 ]
-

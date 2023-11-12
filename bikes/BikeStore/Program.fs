@@ -7,13 +7,13 @@ printfn "Welcome to the BikeStore"
 
 let failOnError result =
     match result with
-    | Ok success -> success 
-    | Error error -> failwithf $"{error}" 
+    | Ok success -> success
+    | Error error -> failwithf $"{error}"
 
-let productCatalog = getProductCatalog()
+let productCatalog = getProductCatalog ()
 
 let newCustomerInfo: UnvalidatedCustomerInfo = {
-    FirstName =  "Kevin"
+    FirstName = "Kevin"
     LastName = "Kraemer"
     EmailAddress = "kevin.kraemer@email.com"
 }
@@ -43,7 +43,7 @@ let newOrderForm: UnvalidatedOrder = {
     CustomerInfo = newCustomerInfo
     ShippingAddress = newAddress
     BillingAddress = newAddress
-    Lines = [newOrderLine1; newOrderLine2]
+    Lines = [ newOrderLine1; newOrderLine2 ]
 }
 
 printfn $"{newOrderForm}"
