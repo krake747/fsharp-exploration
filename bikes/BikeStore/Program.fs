@@ -25,10 +25,16 @@ let newAddress: UnvalidatedAddress = {
     Country = "Luxembourg"
 }
 
-let newOrderLine: UnvalidatedOrderLine = {
+let newOrderLine1: UnvalidatedOrderLine = {
     Id = OrderLineId 1
     ProductCode = productCatalog[0]
     Quantity = OrderQuantity.create 1 |> failOnError
+}
+
+let newOrderLine2: UnvalidatedOrderLine = {
+    Id = OrderLineId 2
+    ProductCode = productCatalog[5]
+    Quantity = OrderQuantity.create 2 |> failOnError
 }
 
 let newOrderForm: UnvalidatedOrder = {
@@ -36,7 +42,7 @@ let newOrderForm: UnvalidatedOrder = {
     CustomerInfo = newCustomerInfo
     ShippingAddress = newAddress
     BillingAddress = newAddress
-    Lines = [newOrderLine]
+    Lines = [newOrderLine1; newOrderLine2]
 }
 
 printfn $"{newOrderForm}"
