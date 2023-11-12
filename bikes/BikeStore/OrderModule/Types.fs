@@ -1,7 +1,7 @@
 ﻿namespace BikeStore.OrderModule
 
 open BikeStore.Common
-open BikeStore.OrderModule.ProductCatalog
+open BikeStore.OrderModule.Products
 
 // ---
 // Inputs
@@ -14,8 +14,6 @@ type OrderId = OrderId of int
 /// A unique OrderLineId
 [<Struct>]
 type OrderLineId = OrderLineId of int
-
-type ProductCode = BikeId
 
 type UnvalidatedCustomerInfo = {
     FirstName: string

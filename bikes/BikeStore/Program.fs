@@ -1,62 +1,42 @@
 ﻿open BikeStore.Common
-open BikeStore.OrderModule.ProductCatalog
+open BikeStore.OrderModule
+open BikeStore.OrderModule.Products
 
 printfn "Welcome to the BikeStore"
 
-let setPrice price =
-    match Price.create price with
-    | Ok p -> p
-    | Error e -> failwith e
+let failOnError result =
+    match result with
+    | Ok success -> success 
+    | Error error -> failwithf $"{error}" 
 
-let productCatalog = [
-    {
-        Id = BikeId 1
-        Model = {
-            Name = "Top Fuel"
-            Year = 2018
-            Brand = BikeBrand "Trek"
-            Category = CategoryName "Cross Country"
-        }
-        ListPrice = setPrice 5000m
-    }
-    {
-        Id = BikeId 2
-        Model = {
-            Name = "Grail CFR Di2"
-            Year = 2023
-            Brand = BikeBrand "Canyon"
-            Category = CategoryName "Gravel"
-        }
-        ListPrice = setPrice 7000m
-    }
-    {
-        Id = BikeId 3
-        Model = {
-            Name = "Revolt Advanced Pro 0"
-            Year = 2022
-            Brand = BikeBrand "Giant"
-            Category = CategoryName "Gravel"
-        }
-        ListPrice = setPrice 4300m
-    }
-    {
-        Id = BikeId 4
-        Model = {
-            Name = "Allez"
-            Year = 2023
-            Brand = BikeBrand "Specialized"
-            Category = CategoryName "Road"
-        }
-        ListPrice = setPrice 2400m
-    }
-]
+let productCatalog = getProductCatalog()
 
-let krake = { FirstName = "Kevin"; LastName = "Kraemer" }
+let newCustomerInfo: UnvalidatedCustomerInfo = {
+    FirstName =  "Kevin"
+    LastName = "Kraemer"
+    EmailAddress = "kevin.kraemer@email.com"
+}
 
-let krakeAddress = {
-    AddressLine1 = "13, rue des Bikes"
-    AddressLine2 = None
-    City = "Hesperange"
-    ZipCode = "7546"
+let newAddress: UnvalidatedAddress = {
+    AddressLine1 = "32, rue Du Cure"
+    AddressLine2 = ""
+    City = "Luxembourg"
+    ZipCode = "1368"
     Country = "Luxembourg"
 }
+
+let newOrderForm: UnvalidatedOrder = {
+    Id = OrderId 1
+    CustomerInfo = newCustomerInfo
+    ShippingAddress = newAddress
+    BillingAddress = newAddress
+    Lines = [
+        {
+            Id = OrderLineId 1
+            ProductCode = productCatalog[0]
+            Quantity = OrderQuantity.create 1 |> failOnError
+        }
+    ]
+}
+
+printfn $"{newOrderForm}"
