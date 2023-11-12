@@ -5,7 +5,7 @@ open BikeStore.Common
 type CustomerInfoValidator = UnvalidatedCustomerInfo -> CustomerInfo
 
 let customerInfoValidator: CustomerInfoValidator =
-    fun (unvalidatedCustomerInfo: UnvalidatedCustomerInfo) ->    
+    fun unvalidatedCustomerInfo ->
     {
         Name = {
             FirstName = unvalidatedCustomerInfo.FirstName 
