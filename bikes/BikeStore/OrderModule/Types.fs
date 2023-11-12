@@ -3,9 +3,18 @@
 open BikeStore.Common
 open BikeStore.OrderModule.ProductCatalog
 
-/// ---
-/// Inputs
-/// ---
+// ---
+// Inputs
+// ---
+
+/// A unique OrderId
+[<Struct>]
+type OrderId = OrderId of int
+
+/// A unique OrderLineId
+[<Struct>]
+type OrderLineId = OrderLineId of int
+
 type ProductCode = BikeId
 
 type UnvalidatedCustomerInfo = {
@@ -36,9 +45,9 @@ type UnvalidatedOrder = {
     Lines: UnvalidatedOrderLine list
 }
 
-/// ---
-/// Outputs
-/// ---
+// ---
+// Outputs
+// ---
 
 type PricedOrderLine = {
     OrderLineId: OrderLineId
@@ -56,9 +65,9 @@ type PricedOrder = {
     Lines: PricedOrderLine list
 }
 
-/// ---
-/// Output Events
-/// ---
+// ---
+// Output Events
+// ---
 
 type OrderAcknowledgmentSent = { OrderId: OrderId; EmailAddress: EmailAddress }
 

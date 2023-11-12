@@ -35,16 +35,8 @@ type Price = private Price of decimal
 [<Struct>]
 type BillingAmount = private BillingAmount of decimal
 
-/// A unique OrderId
-[<Struct>]
-type OrderId = OrderId of int
-
-/// A unique OrderLineId
-[<Struct>]
-type OrderLineId = OrderLineId of int
-
 // ---
-// Smart Constructors
+// Smart Factory Constructors
 // ---
 module EmailAddress =
     let create email =
@@ -57,7 +49,6 @@ module EmailAddress =
 
     let value (EmailAddress email) = email
 
-
 module UnitQuantity =
     let create qty =
         if qty < 1 then Error "UnitQuantity cannot be negative"
@@ -65,3 +56,11 @@ module UnitQuantity =
         else Ok(UnitQuantity qty)
 
     let value (UnitQuantity qty) = qty
+
+module Price =
+    let create price =
+        if price < 0m then Error "Price must not be less than 0"
+        elif price > 50000m then Error "Price must not be greater thatn 50'000"
+        else Ok(Price price)
+        
+    let value (Price price) = price

@@ -3,6 +3,11 @@ open BikeStore.OrderModule.ProductCatalog
 
 printfn "Welcome to the BikeStore"
 
+let setPrice price =
+    match Price.create price with
+    | Ok p -> p
+    | Error e -> failwith e
+
 let productCatalog = [
     {
         Id = BikeId 1
@@ -12,7 +17,7 @@ let productCatalog = [
             Brand = BikeBrand "Trek"
             Category = CategoryName "Cross Country"
         }
-        ListPrice = 5000m
+        ListPrice = setPrice 5000m
     }
     {
         Id = BikeId 2
@@ -22,7 +27,7 @@ let productCatalog = [
             Brand = BikeBrand "Canyon"
             Category = CategoryName "Gravel"
         }
-        ListPrice = 7000m
+        ListPrice = setPrice 7000m
     }
     {
         Id = BikeId 3
@@ -32,7 +37,7 @@ let productCatalog = [
             Brand = BikeBrand "Giant"
             Category = CategoryName "Gravel"
         }
-        ListPrice = 4300m
+        ListPrice = setPrice 4300m
     }
     {
         Id = BikeId 4
@@ -42,14 +47,14 @@ let productCatalog = [
             Brand = BikeBrand "Specialized"
             Category = CategoryName "Road"
         }
-        ListPrice = 2400m
+        ListPrice = setPrice 2400m
     }
 ]
 
 let krake = { FirstName = "Kevin"; LastName = "Kraemer" }
 
 let krakeAddress = {
-    AddressLine1 = Address "13, rue des Bikes"
+    AddressLine1 = "13, rue des Bikes"
     AddressLine2 = None
     City = "Hesperange"
     ZipCode = "7546"
