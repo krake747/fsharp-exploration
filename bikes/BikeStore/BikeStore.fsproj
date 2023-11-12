@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net8.0</TargetFramework>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <RootNamespace>BikeStore</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Content Include="..\..\.dockerignore">
+            <Link>.dockerignore</Link>
+        </Content>
+        <Content Include="Dockerfile"/>
+        <Compile Include="Common\Types.fs" />
+        <Compile Include="Common\CompoundTypes.fs" />
+        <Compile Include="Domain\ProductCatalog.fs" />
+        <Compile Include="Domain\OrderTaking.fs" />
+        <Compile Include="Payment.fs"/>
+        <Compile Include="Program.fs"/>
+    </ItemGroup>
+
+</Project>
