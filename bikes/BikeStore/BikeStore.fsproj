@@ -12,10 +12,10 @@
             <Link>.dockerignore</Link>
         </Content>
         <Content Include="Dockerfile"/>
-        <Compile Include="Common\Types.fs" />
-        <Compile Include="Common\CompoundTypes.fs" />
-        <Compile Include="Domain\ProductCatalog.fs" />
-        <Compile Include="Domain\OrderTaking.fs" />
+        <Compile Include="Common\Types.fs"/>
+        <Compile Include="Common\CompoundTypes.fs"/>
+        <Compile Include="OrderModule\ProductCatalog.fs"/>
+        <Compile Include="OrderModule\Types.fs"/>
         <Compile Include="Payment.fs"/>
         <Compile Include="Program.fs"/>
     </ItemGroup>

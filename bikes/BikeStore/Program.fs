@@ -1,5 +1,5 @@
 ﻿open BikeStore.Common
-open BikeStore.Domain.ProductCatalog
+open BikeStore.OrderModule.ProductCatalog
 
 printfn "Welcome to the BikeStore"
 
@@ -46,15 +46,12 @@ let productCatalog = [
     }
 ]
 
-let krake = {
-    FirstName = "Kevin"
-    LastName = "Kraemer"
-}
+let krake = { FirstName = "Kevin"; LastName = "Kraemer" }
 
 let krakeAddress = {
-    AddressLine1 = "13, rue des Bikes"
-    AddressLine2 = None 
+    AddressLine1 = Address "13, rue des Bikes"
+    AddressLine2 = None
     City = "Hesperange"
     ZipCode = "7546"
-    Country = "Luxembourg" 
+    Country = "Luxembourg"
 }

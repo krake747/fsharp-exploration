@@ -1,14 +1,8 @@
 ﻿namespace BikeStore.Common
 
-type PersonalName = {
-    FirstName: string
-    LastName: string
-}
+type PersonalName = { FirstName: string; LastName: string }
 
-type CustomerInfo = {
-    Name: PersonalName
-    EmailAddress: EmailAddress
-}
+type CustomerInfo = { Name: PersonalName; EmailAddress: EmailAddress }
 
 type Address = {
     AddressLine1: string
@@ -17,4 +11,3 @@ type Address = {
     ZipCode: string
     Country: string
 }
-
