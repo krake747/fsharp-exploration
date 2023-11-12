@@ -1,6 +1,7 @@
 ﻿open BikeStore.Common
 open BikeStore.OrderModule
 open BikeStore.OrderModule.Products
+open BikeStore.OrderModule.PlaceOrder
 
 printfn "Welcome to the BikeStore"
 
@@ -46,3 +47,7 @@ let newOrderForm: UnvalidatedOrder = {
 }
 
 printfn $"{newOrderForm}"
+
+let validCustomerInfo = customerInfoValidator newCustomerInfo
+
+printfn $"Valid CustomerInfo {validCustomerInfo}"
