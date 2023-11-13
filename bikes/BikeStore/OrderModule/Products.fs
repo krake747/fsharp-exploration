@@ -1,6 +1,7 @@
 ﻿module BikeStore.OrderModule.Products
 
 open BikeStore.Common
+open BikeStore.Common.ResultExtensions
 open Microsoft.FSharp.Core
 
 // ---
@@ -49,11 +50,6 @@ type Clothing = { Id: ClothingId; Model: ClothingModel; ListPrice: Price }
 type ProductCode =
     | BikeCode of BikeId
     | ClothingCode of ClothingId
-
-let failOnError result =
-    match result with
-    | Ok success -> success
-    | Error error -> failwithf $"{error}"
 
 let getBikes () : Bike list = [
     {
@@ -121,11 +117,10 @@ let getClothes () : Clothing list = [
     }
 ]
 
-let getProductCatalog () : ProductCode list = [
-    BikeCode(BikeId 1)
-    BikeCode(BikeId 2)
-    BikeCode(BikeId 3)
-    ClothingCode(ClothingId 4)
-    ClothingCode(ClothingId 5)
-    ClothingCode(ClothingId 6)
-]
+let mergeDistinct l1 l2 =
+    l1 @ l2 |> List.distinct
+
+let bikeIds = getBikes () |> List.map (fun b -> BikeCode(b.Id))
+let clothingIds = getClothes () |> List.map (fun c -> ClothingCode(c.Id))
+
+let getProductCatalog () : ProductCode list = mergeDistinct bikeIds clothingIds

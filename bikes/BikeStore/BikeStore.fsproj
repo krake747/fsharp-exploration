@@ -14,6 +14,7 @@
         <Content Include="Dockerfile"/>
         <Compile Include="Common\Types.fs"/>
         <Compile Include="Common\CompoundTypes.fs"/>
+        <Compile Include="Common\ResultExtensions.fs"/>
         <Compile Include="OrderModule\Products.fs"/>
         <Compile Include="OrderModule\Types.fs"/>
         <Compile Include="OrderModule\PlaceOrder.fs"/>

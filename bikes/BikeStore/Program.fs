@@ -1,14 +1,10 @@
 ﻿open BikeStore.Common
+open BikeStore.Common.ResultExtensions
 open BikeStore.OrderModule
 open BikeStore.OrderModule.Products
 open BikeStore.OrderModule.PlaceOrder
 
 printfn "Welcome to the BikeStore"
-
-let failOnError result =
-    match result with
-    | Ok success -> success
-    | Error error -> failwithf $"{error}"
 
 let productCatalog = getProductCatalog ()
 
