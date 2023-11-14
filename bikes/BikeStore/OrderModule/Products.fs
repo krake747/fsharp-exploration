@@ -124,3 +124,4 @@ let bikeIds = getBikes () |> List.map (fun b -> BikeCode(b.Id))
 let clothingIds = getClothes () |> List.map (fun c -> ClothingCode(c.Id))
 
 let getProductCatalog () : ProductCode list = mergeDistinct bikeIds clothingIds
+
