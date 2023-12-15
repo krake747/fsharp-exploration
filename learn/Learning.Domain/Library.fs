@@ -104,3 +104,55 @@ module BillingNull =
         details.Delivery
         |> Option.map (_.ToUpper())
         |> Option.iter (fun address -> printfn $"Delivery address:\n{details.Name.ToUpper()}\n{address}")
+
+type House = {
+    Address : string
+    Price : decimal
+}
+       
+module House =
+    
+    let private random = Random(Seed = 1)
+    
+    let getRandom count =
+        Array.init count (fun i -> {
+            Address = $"Stochastic Street {i + 1}"
+            Price = random.Next(50_000, 500_000) |> decimal
+        })
+    
+module Distance =
+    
+    let private random = Random(Seed = 1)
+    
+    let tryToSchool (house: House) =
+        let dist = random.Next(10) |> double
+        if dist < 5. then Some dist else None
+    
+type PriceBand = | Cheap | Medium | Expensive
+
+module PriceBand =
+    
+    let fromPrice (price: decimal) =
+        match price with
+        | _ when price < 100_000m -> Cheap
+        | _ when price < 200_000m -> Medium
+        | _ -> Expensive
+
+module Average =
+    
+    let inline averageOrZero (values: 'T[]) =
+        match values.Length with
+        | len when len = 0 -> LanguagePrimitives.GenericZero<'T>
+        | _ -> Array.average values
+
+module Array = 
+    
+    let inline averageOr (defaultValue: 'T) (values: 'T[]) =
+        match values.Length with
+        | len when len = 0 -> defaultValue
+        | _ -> Array.average values
+    
+    let inline tryAverage (values: 'T[]) =
+        match values.Length with
+        | len when len = 0 -> None
+        | _ -> values |> Array.average |> Some
