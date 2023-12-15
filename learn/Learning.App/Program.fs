@@ -38,9 +38,17 @@ let herOrder = {
     Delivery = Download
 }
 
+let themOrder = {
+    Name = "Tom Prime"
+    Billing = "12 Heaven Road\nTomorrow\n24665"
+    Delivery = ClickAndCollect 2
+}
+
 let labels = [ myOrder; hisOrder; herOrder ] |> deliveryLabels
 
 labels |> Seq.iter (fun l -> printfn $"{l}")
+
+let collections = [myOrder; hisOrder; herOrder; themOrder ] |> collectionsFor 2 |> Seq.iter (fun c -> printfn $"{c}")
 
 // --- Nullable reference type interop C# to F#
 

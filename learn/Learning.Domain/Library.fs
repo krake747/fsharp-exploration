@@ -46,6 +46,7 @@ module Billing =
         | AsBilling
         | Physical of string
         | Download
+        | ClickAndCollect of int
 
     type BillingDetails = { Name: string; Billing: string; Delivery: Delivery }
 
@@ -54,7 +55,15 @@ module Billing =
         | AsBilling -> details.Billing |> Some
         | Physical address -> address |> Some
         | Download -> None
+        | ClickAndCollect _ -> None
 
+    let collectionsFor (storeId: int) (details: BillingDetails seq) =
+        details
+        |> Seq.choose (fun d ->
+            match d.Delivery with
+            | ClickAndCollect s when s = storeId -> Some d
+            | _ -> None)
+    
     let deliveryLabels (billingDetails: BillingDetails seq) =
         billingDetails |> Seq.choose tryDeliveryLabel
 
