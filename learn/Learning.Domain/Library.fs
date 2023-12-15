@@ -42,14 +42,37 @@ module MilesChains =
 
 module Billing =
 
-    type BillingDetails = {
-        Name: string
-        Billing: string
-        Delivery: string option
-    }
-    
-    let tryLastLine (address : string) =
+    type Delivery =
+        | AsBilling
+        | Physical of string
+        | Download
+
+    type BillingDetails = { Name: string; Billing: string; Delivery: Delivery }
+
+    let tryDeliveryLabel (details: BillingDetails) =
+        match details.Delivery with
+        | AsBilling -> details.Billing |> Some
+        | Physical address -> address |> Some
+        | Download -> None
+
+    let deliveryLabels (billingDetails: BillingDetails seq) =
+        billingDetails |> Seq.choose tryDeliveryLabel
+
+module BillingNull =
+
+    type SafeString(s: string) =
+        do
+            if s = null then
+                raise <| ArgumentException()
+
+        member _.Value = s
+        override _.ToString() = s
+
+    type BillingDetails = { Name: string; Billing: string; Delivery: string option }
+
+    let tryLastLine (address: string) =
         let parts = address.Split('\n', StringSplitOptions.RemoveEmptyEntries)
+
         match parts with
         | [||] -> None
         | parts -> parts |> Array.last |> Some
@@ -58,12 +81,17 @@ module Billing =
         match Int32.TryParse codeString with
         | true, i -> i |> Some
         | false, _ -> None
-        
-    let postalCodeHub (code : int) =
-        if code = 62291 then "Hub 1" else "Hub 2"    
+
+    let postalCodeHub (code: int) =
+        if code = 62291 then "Hub 1" else "Hub 2"
 
     let tryHub (details: BillingDetails) =
         details.Delivery
         |> Option.bind tryLastLine
         |> Option.bind tryPostalCode
         |> Option.map postalCodeHub
+
+    let printDeliveryAddress (details: BillingDetails) =
+        details.Delivery
+        |> Option.map (_.ToUpper())
+        |> Option.iter (fun address -> printfn $"Delivery address:\n{details.Name.ToUpper()}\n{address}")
