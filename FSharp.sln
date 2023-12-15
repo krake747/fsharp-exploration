@@ -19,6 +19,12 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "BikeStore", "bikes\BikeStor
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "PlotlyApp", "PlotlyApp\PlotlyApp.fsproj", "{653EA5A8-9BAE-4796-BE56-8B11ED00B910}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "learn", "learn", "{9193F59D-3217-4987-B0FB-592495CC964B}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Learning.App", "learn\Learning.App\Learning.App.fsproj", "{0CE27320-36E2-43A5-9AA5-FB11EDA546E2}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Learning.Domain", "learn\Learning.Domain\Learning.Domain.fsproj", "{4754B9DA-601C-466F-8671-DA0C7E7F7582}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,8 +62,18 @@ Global
 		{653EA5A8-9BAE-4796-BE56-8B11ED00B910}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{653EA5A8-9BAE-4796-BE56-8B11ED00B910}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{653EA5A8-9BAE-4796-BE56-8B11ED00B910}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CE27320-36E2-43A5-9AA5-FB11EDA546E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CE27320-36E2-43A5-9AA5-FB11EDA546E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CE27320-36E2-43A5-9AA5-FB11EDA546E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CE27320-36E2-43A5-9AA5-FB11EDA546E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4754B9DA-601C-466F-8671-DA0C7E7F7582}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4754B9DA-601C-466F-8671-DA0C7E7F7582}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4754B9DA-601C-466F-8671-DA0C7E7F7582}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4754B9DA-601C-466F-8671-DA0C7E7F7582}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0807A15D-4093-4A1F-9EF4-92F22CC56A34} = {702CBA06-6E86-4B34-B6CE-19FD315210D4}
+		{0CE27320-36E2-43A5-9AA5-FB11EDA546E2} = {9193F59D-3217-4987-B0FB-592495CC964B}
+		{4754B9DA-601C-466F-8671-DA0C7E7F7582} = {9193F59D-3217-4987-B0FB-592495CC964B}
 	EndGlobalSection
 EndGlobal

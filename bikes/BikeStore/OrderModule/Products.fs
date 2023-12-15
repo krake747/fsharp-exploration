@@ -51,6 +51,10 @@ type ProductCode =
     | BikeCode of BikeId
     | ClothingCode of ClothingId
 
+// ---
+// Product Catalog
+// ---
+
 let getBikes () : Bike list = [
     {
         Id = BikeId 1
