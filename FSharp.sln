@@ -25,6 +25,11 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Learning.App", "learn\Learn
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Learning.Domain", "learn\Learning.Domain\Learning.Domain.fsproj", "{4754B9DA-601C-466F-8671-DA0C7E7F7582}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{A4A0D741-5F6E-4982-8067-D589FA274941}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\customer.fsx = scripts\customer.fsx
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
