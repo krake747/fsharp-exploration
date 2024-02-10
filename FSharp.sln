@@ -28,6 +28,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{A4A0D741-5F6E-4982-8067-D589FA274941}"
 	ProjectSection(SolutionItems) = preProject
 		scripts\customer.fsx = scripts\customer.fsx
+		scripts\customer-functions.fsx = scripts\customer-functions.fsx
 	EndProjectSection
 EndProject
 Global
