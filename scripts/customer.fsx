@@ -8,10 +8,15 @@ let mary = Registered (Id = "Mary", IsEligible = true)
 let richard = Registered (Id = "Richard", IsEligible = false)
 let sarah = Guest (Id = "Sarah")
 
+let (|IsEligible|_|) customer =
+    match customer with
+    | Registered (IsEligible = true) -> Some ()
+    | _ -> None
+
 let calculateTotal customer spend =
     let discount =
         match customer with
-        | Registered (IsEligible = true) when spend >= 100.0m -> spend * 0.1m
+        | IsEligible when spend >= 100.0m -> spend * 0.1m
         | _ -> 0.0m
     
     spend - discount
