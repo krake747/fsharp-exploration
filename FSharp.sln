@@ -29,6 +29,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{A4A0
 	ProjectSection(SolutionItems) = preProject
 		scripts\customer.fsx = scripts\customer.fsx
 		scripts\customer-functions.fsx = scripts\customer-functions.fsx
+		scripts\result.fsx = scripts\result.fsx
+		scripts\option.fsx = scripts\option.fsx
 	EndProjectSection
 EndProject
 Global

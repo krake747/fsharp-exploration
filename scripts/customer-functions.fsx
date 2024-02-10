@@ -13,8 +13,7 @@ let increaseCreditIfVip customer =
     { customer with Credit = customer.Credit + increase }
 
 // Composition operator
-let upgradeCustomerComposed =
-    getPurchases >> tryPromoteVip >> increaseCreditIfVip
+let upgradeCustomerComposed = getPurchases >> tryPromoteVip >> increaseCreditIfVip
 
 // Nested
 let upgradeCustomerNested customer =
@@ -43,7 +42,7 @@ let assertSTDtoVIP =
 
 let assertSTD =
     upgradeCustomerComposed { customerSTD with Id = 3; Credit = 50m } = { Id = 3; IsVip = false; Credit = 100m }
-    
+
 printfn $"{assertVIP}"
 printfn $"{assertSTDtoVIP}"
 printfn $"{assertSTD}"
