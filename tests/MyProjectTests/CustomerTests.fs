@@ -1,4 +1,4 @@
-namespace MyProjectTests
+namespace MyProjectTests.CustomerTests
 
 open Xunit
 open FsUnit 
