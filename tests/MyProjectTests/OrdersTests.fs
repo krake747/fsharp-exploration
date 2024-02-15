@@ -59,3 +59,49 @@ module ``Removing a product`` =
         let expected = { Id = 2; Items = [ { ProductId = 1; Quantity = 1 } ] }
         let actual = myOrder |> removeProduct 2
         actual |> should equal expected
+
+module ``Reduce item quantity`` =
+    
+    [<Fact>]
+    let ``reduce existing item quantity`` () =
+        let myOrder = { Id = 1; Items = [ { ProductId = 1; Quantity = 5 } ] }
+        let expected = { Id = 1; Items = [ { ProductId = 1; Quantity = 2 } ] }
+        let actual = myOrder |> reduceItem 1 3
+        actual |> should equal expected
+
+    [<Fact>]
+    let ``reduce existing item and remove`` () =
+        let myOrder = { Id = 2; Items = [ { ProductId = 1; Quantity = 5 } ] }
+        let expected = { Id = 2; Items = [] }
+        let actual = myOrder |> reduceItem 1 5
+        actual |> should equal expected
+
+    [<Fact>]
+    let ``reduce item with no quantity`` () =
+        let myOrder = { Id = 3; Items = [ { ProductId = 1; Quantity = 1 } ] }
+        let expected = { Id = 3; Items = [ { ProductId = 1; Quantity = 1 } ] }
+        let actual = myOrder |> reduceItem 2 5
+        actual |> should equal expected
+
+    [<Fact>]
+    let ``reduce item with no quantity for empty order`` () =
+        let myEmptyOrder = { Id = 4; Items = [] }
+        let expected = { Id = 4; Items = [] }
+        let actual = myEmptyOrder |> reduceItem 2 5
+        actual |> should equal expected
+
+module ``Empty an order of all items`` =
+    
+    [<Fact>]
+    let ``order with existing item`` () =
+        let myOrder = { Id = 1; Items = [ { ProductId = 1; Quantity = 1 } ] }
+        let expected = { Id = 1; Items = [] }
+        let actual = myOrder |> clearItems
+        actual |> should equal expected
+
+    [<Fact>]
+    let ``empty order is unchanged`` () =
+        let myEmptyOrder = { Id = 2; Items = [] }
+        let expected = { Id = 2; Items = [] }
+        let actual = myEmptyOrder |> clearItems
+        actual |> should equal expected

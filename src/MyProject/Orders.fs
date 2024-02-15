@@ -11,10 +11,6 @@ type Order = {
     Items: Item list
 }
 
-// Increase the quantity of an item
-// Reduce quantity of an item
-// Clear all of the items
-
 module Domain =
     // Add an item
     // 1 - Prepend new item to existing order items
@@ -47,6 +43,18 @@ module Domain =
             |> List.filter (fun x -> x.ProductId <> productId)
             |> List.sortBy _.ProductId
         { order with Items = items }
+        
+    // Reduce quantity of an item
+    let reduceItem productId quantity order =
+        let items =
+            { ProductId = productId; Quantity = -quantity } :: order.Items
+            |> recalculate
+            |> List.filter (fun x -> x.Quantity > 0)
+        { order with Items = items }    
+          
+    // Clear all of the items
+    let clearItems order =
+        { order with Items = [] }
         
     
         
