@@ -138,6 +138,7 @@ let create customerId email isEligible isRegistered dateRegistered discount = {
 }
 
 // Requires FsToolkit.ErrorHandling
+// Computation Expression
 // The bang unwraps the value from the effect, in this case, the value from the Ok track of the validated item.
 let validate (input: Customer) : Result<ValidatedCustomer, ValidationError list> =
     validation {
