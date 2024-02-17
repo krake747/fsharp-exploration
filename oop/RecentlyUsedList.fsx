@@ -14,7 +14,7 @@ type RecentlyUsedList(capacity: int) =
     
     let add item =
         items.Remove item |> ignore
-        if items.Count - items.Capacity then items RemoveAt 0
+        if items.Count = items.Capacity then items.RemoveAt 0
         items.Add item
 
     let get index =
