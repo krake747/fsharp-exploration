@@ -48,6 +48,13 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MyProjectTests", "tests\MyP
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MyConsole", "src\MyConsole\MyConsole.fsproj", "{869757FB-E109-44A7-AF16-C85E58118638}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "oop", "oop", "{9A3E11E8-3259-44B3-9FB2-1FCCDA4AF2ED}"
+	ProjectSection(SolutionItems) = preProject
+		oop\Coordinate.fsx = oop\Coordinate.fsx
+		oop\FizzBuzz.fsx = oop\FizzBuzz.fsx
+		oop\RecentlyUsedList.fsx = oop\RecentlyUsedList.fsx
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
