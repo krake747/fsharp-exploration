@@ -7,15 +7,15 @@ type UnregisteredCustomer = { Id: CustomerId }
 type ValidationError = InputOutOfRange of string
 
 [<Struct>]
-type Spend = private Spend of decimal
+type Spend = private { Spend: decimal }
 
 module Spend =
 
-    let value input = input |> fun (Spend value) -> value
+    let value input = input.Spend
 
     let create input =
         if input >= 0.0M && input <= 1000.0M then
-            Ok(Spend input)
+            Ok { Spend = input }
         else
             Error(InputOutOfRange "You can only spend between 0 and 1000")
 
