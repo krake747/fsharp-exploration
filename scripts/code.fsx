@@ -1,13 +1,19 @@
-﻿type ValidationError = InputOutOfRange of string
+﻿type CustomerId = CustomerId of string
+
+type RegisteredCustomer = { Id: CustomerId }
+
+type UnregisteredCustomer = { Id: CustomerId }
+
+type ValidationError = InputOutOfRange of string
 
 [<Struct>]
-type Spend =
-    private
-    | Spend of decimal
+type Spend = private Spend of decimal
 
-    member this.Value = this |> fun (Spend value) -> value
+module Spend =
 
-    static member Create input =
+    let value input = input |> fun (Spend value) -> value
+
+    let create input =
         if input >= 0.0M && input <= 1000.0M then
             Ok(Spend input)
         else
@@ -15,26 +21,25 @@ type Spend =
 
 type Total = decimal
 
-type RegisteredCustomer = { Id: string }
-
-type UnregisteredCustomer = { Id: string }
+type DiscountPercentage = decimal
 
 type Customer =
     | Eligible of RegisteredCustomer
     | Registered of RegisteredCustomer
     | Guest of UnregisteredCustomer
 
-    member this.CalculateDiscountPercentage(spend: Spend) =
-        match this with
-        | Eligible _ ->
-            if spend.Value >= 100.0M then 0.1M else 0.0M
+module Customer =
+    let calculateDiscountPercentage (spend: Spend) (customer: Customer) : DiscountPercentage =
+        match customer with
+        | Eligible _ -> if Spend.value spend >= 100.0M then 0.1M else 0.0M
         | _ -> 0.0M
 
-type CalculateTotal = Customer -> Spend -> Total
+    let calculateTotal (customer: Customer) (spend: Spend) : Total =
+        customer
+        |> calculateDiscountPercentage spend
+        |> fun discountPercentage -> Spend.value spend * (1.0M - discountPercentage)
 
-let calculateTotal (customer: Customer) (spend: Spend) : Total =
-    spend.Value * (1.0M - customer.CalculateDiscountPercentage spend)
-
+// type CalculateTotal = Customer -> Spend -> Total
 
 // let calculateTotalAlt: CalculateTotal =
 //     fun customer spend ->
@@ -44,16 +49,16 @@ let calculateTotal (customer: Customer) (spend: Spend) : Total =
 //             | _ -> 0.0M
 //         spend - discount
 
-let john = Eligible { Id = "John" }
-let mary = Eligible { Id = "Mary" }
-let richard = Registered { Id = "Richard" }
-let sarah = Guest { Id = "Sarah" }
+let john = Eligible { Id = CustomerId "John" }
+let mary = Eligible { Id = CustomerId "Mary" }
+let richard = Registered { Id = CustomerId "Richard" }
+let sarah = Guest { Id = CustomerId "Sarah" }
 
 let isEqualTo expected actual = actual = expected
 
 let assertEqual customer spent expected =
-    Spend.Create spent
-    |> Result.map (calculateTotal customer)
+    Spend.create spent
+    |> Result.map (Customer.calculateTotal customer)
     |> isEqualTo (Ok expected)
 
 let assertJohn = assertEqual john 100.0M 90.0M |> printfn "%A"
