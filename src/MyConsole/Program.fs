@@ -1,6 +1,7 @@
 ﻿open System
 open System.IO
 open System.Text.RegularExpressions
+open FsToolkit.ErrorHandling
 
 type Customer = {
     CustomerId: string
@@ -136,37 +137,18 @@ let create customerId email isEligible isRegistered dateRegistered discount = {
     Discount = discount
 }
 
+// Requires FsToolkit.ErrorHandling
+// The bang unwraps the value from the effect, in this case, the value from the Ok track of the validated item.
 let validate (input: Customer) : Result<ValidatedCustomer, ValidationError list> =
-    let customerId = input.CustomerId |> validateCustomerId
-    let email = input.Email |> validateEmail
-    let isEligible = input.IsEligible |> validateIsEligible
-    let isRegistered = input.IsRegistered |> validateIsRegistered
-    let dateRegistered = input.DateRegistered |> validateDateRegistered
-    let discount = input.Discount |> validateDiscount
-
-    let errors =
-        [
-            customerId |> getError
-            email |> getError
-            isEligible |> getError
-            isRegistered |> getError
-            dateRegistered |> getError
-            discount |> getError
-        ]
-        |> List.concat
-
-    match errors with
-    | [] ->
-        Ok(
-            create
-                (customerId |> getValue)
-                (email |> getValue)
-                (isEligible |> getValue)
-                (isRegistered |> getValue)
-                (dateRegistered |> getValue)
-                (discount |> getValue)
-        )
-    | _ -> Error errors
+    validation {
+        let! customerId = input.CustomerId |> validateCustomerId |> Result.mapError List.singleton
+        and! email = input.Email |> validateEmail |> Result.mapError List.singleton
+        and! isEligible = input.IsEligible |> validateIsEligible |> Result.mapError List.singleton
+        and! isRegistered = input.IsRegistered |> validateIsRegistered |> Result.mapError List.singleton
+        and! dateRegistered = input.DateRegistered |> validateDateRegistered |> Result.mapError List.singleton
+        and! discount = input.Discount |> validateDiscount |> Result.mapError List.singleton
+        return create customerId email isEligible isRegistered dateRegistered discount
+    }
 
 let parse (data: string seq) =
     data |> Seq.skip 1 |> Seq.map parseLine |> Seq.choose id |> Seq.map validate
