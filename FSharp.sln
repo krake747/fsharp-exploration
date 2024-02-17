@@ -53,6 +53,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "oop", "oop", "{9A3E11E8-325
 		oop\Coordinate.fsx = oop\Coordinate.fsx
 		oop\FizzBuzz.fsx = oop\FizzBuzz.fsx
 		oop\RecentlyUsedList.fsx = oop\RecentlyUsedList.fsx
+		oop\expressions.fsx = oop\expressions.fsx
 	EndProjectSection
 EndProject
 Global
