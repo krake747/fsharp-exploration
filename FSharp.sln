@@ -35,6 +35,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{A4A0
 		scripts\lists.fsx = scripts\lists.fsx
 		scripts\orders.fsx = scripts\orders.fsx
 		scripts\active-patterns.fsx = scripts\active-patterns.fsx
+		scripts\code.fsx = scripts\code.fsx
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D3A56597-5030-455E-B197-C899FC27BF68}"
