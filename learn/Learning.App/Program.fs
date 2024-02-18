@@ -48,7 +48,10 @@ let labels = [ myOrder; hisOrder; herOrder ] |> deliveryLabels
 
 labels |> Seq.iter (fun l -> printfn $"{l}")
 
-let collections = [myOrder; hisOrder; herOrder; themOrder ] |> collectionsFor 2 |> Seq.iter (fun c -> printfn $"{c}")
+let collections =
+    [ myOrder; hisOrder; herOrder; themOrder ]
+    |> collectionsFor 2
+    |> Seq.iter (fun c -> printfn $"{c}")
 
 // --- Nullable reference type interop C# to F#
 
@@ -120,16 +123,15 @@ let houses = [|
 
 // Filter (C# Where)
 
-let cheapHouses =
-    houses |> Array.filter (fun h -> h.Price < 100_000m)
-    
+let cheapHouses = houses |> Array.filter (fun h -> h.Price < 100_000m)
+
 cheapHouses |> Array.iter (fun h -> printf $"{h}")
 
 let housePrices =
     House.getRandom 20
     |> Array.map (fun h -> $"Address: {h.Address} - Price: {h.Price}")
 
-housePrices |> Array.iter (fun h ->printfn $"{h}" )
+housePrices |> Array.iter (fun h -> printfn $"{h}")
 
 let average =
     House.getRandom 20
@@ -142,18 +144,19 @@ let over2500000 =
     House.getRandom 20
     |> Array.filter (fun h -> h.Price > 250_000m)
     |> Array.sortByDescending _.Price
-    
-over2500000 |> Array.iter (fun h ->printfn $"{h}" )
-    
+
+over2500000 |> Array.iter (fun h -> printfn $"{h}")
+
 let housesNearSchools =
     House.getRandom 20
     |> Array.choose (fun h ->
         match h |> Distance.tryToSchool with
         | Some d -> Some(h, d)
         | None -> None)
-    
-housesNearSchools |> Array.iter (fun (h, d) -> printfn $"House: {h} - Distance {d}")
-    
+
+housesNearSchools
+|> Array.iter (fun (h, d) -> printfn $"House: {h} - Distance {d}")
+
 let singleHouse =
     House.getRandom 20
     |> Array.choose (fun h ->
@@ -164,7 +167,7 @@ let singleHouse =
 
 printfn $"Single House: {fst singleHouse} - Distance: {snd singleHouse}"
 
-let ex1 = [|10.m; 100.m; 1000.m|] |> Average.averageOrZero
+let ex1 = [| 10.m; 100.m; 1000.m |] |> Average.averageOrZero
 printfn $"{ex1}"
 
 let ex2: decimal = [||] |> Average.averageOrZero

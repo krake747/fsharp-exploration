@@ -1,15 +1,9 @@
 ﻿namespace MyProject.Orders
 
 
-type Item = {
-    ProductId: int
-    Quantity: int
-}
+type Item = { ProductId: int; Quantity: int }
 
-type Order = {
-    Id: int
-    Items: Item list
-}
+type Order = { Id: int; Items: Item list }
 
 module Domain =
     // Add an item
@@ -21,19 +15,18 @@ module Domain =
     let recalculate items =
         items
         |> List.groupBy (_.ProductId)
-        |> List.map (fun (id, items) -> { ProductId = id; Quantity = items |> List.sumBy (_.Quantity) })
+        |> List.map (fun (id, items) -> {
+            ProductId = id
+            Quantity = items |> List.sumBy (_.Quantity)
+        })
         |> List.sortBy (_.ProductId)
-        
+
     let addItem item order =
-        let items =
-            item :: order.Items
-            |> recalculate
+        let items = item :: order.Items |> recalculate
         { order with Items = items }
-        
+
     let addItems items order =
-        let items =
-            items @ order.Items
-            |> recalculate
+        let items = items @ order.Items |> recalculate
         { order with Items = items }
 
     // Remove an item
@@ -42,19 +35,17 @@ module Domain =
             order.Items
             |> List.filter (fun x -> x.ProductId <> productId)
             |> List.sortBy _.ProductId
+
         { order with Items = items }
-        
+
     // Reduce quantity of an item
     let reduceItem productId quantity order =
         let items =
             { ProductId = productId; Quantity = -quantity } :: order.Items
             |> recalculate
             |> List.filter (fun x -> x.Quantity > 0)
-        { order with Items = items }    
-          
+
+        { order with Items = items }
+
     // Clear all of the items
-    let clearItems order =
-        { order with Items = [] }
-        
-    
-        
+    let clearItems order = { order with Items = [] }

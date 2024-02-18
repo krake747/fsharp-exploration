@@ -13,7 +13,7 @@ type FizzBuzz(mapping) =
         |> List.reduce (+)
         |> fun s -> if s = "" then string n else s
 
-    interface IFizzBuzz with        
+    interface IFizzBuzz with
         member _.Calculate(value) = calculate value
 
 let doFizzBuzz mapping range =
@@ -27,4 +27,3 @@ let doFizzBuzzAlt mapping range =
 let output =
     doFizzBuzz [ (3, "Fizz"); (5, "Buzz") ] [ 1..15 ]
     |> List.iter (fun x -> printfn $"%A{x}")
-    

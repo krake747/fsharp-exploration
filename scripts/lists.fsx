@@ -41,73 +41,61 @@ let emptyJoined = emptyListA @ list1
 let myList = [ 1..9 ]
 
 let getEvens items =
-    items
-    |> List.filter (fun x -> x % 2 = 0)
-    
+    items |> List.filter (fun x -> x % 2 = 0)
+
 let evens = getEvens myList
 
 // Sum
-let sum items =
-    items |> List.sum
-    
+let sum items = items |> List.sum
+
 let mySum = sum myList
 
 // Map (C# Select)
-let triple items =
-    items
-    |> List.map (fun x -> x * 3)
-    
+let triple items = items |> List.map (fun x -> x * 3)
+
 let myTriples = triple [ 1..5 ]
 
-let print items = items |> List.iter (fun x -> printfn $"My value is %i{x}")
+let print items =
+    items |> List.iter (fun x -> printfn $"My value is %i{x}")
+
 print [ 1..9 ]
 
 let tupleItems = [ (1, 0.25M); (5, 0.25M); (1, 2.25M); (1, 125M); (7, 10.9M) ]
 
 // map + sum
 let sumMap items =
-    items
-    |> List.map (fun (q, p) -> decimal q * p)
-    |> List.sum
-    
+    items |> List.map (fun (q, p) -> decimal q * p) |> List.sum
+
 let sumMap2 items =
-    items
-    |> List.sumBy (fun (q, p) -> decimal q * p)
-    
+    items |> List.sumBy (fun (q, p) -> decimal q * p)
+
 let sumMapA = sumMap tupleItems
 let sumMapB = sumMap2 tupleItems
 
 // Folding (C# Aggregate)
-let folded =
-    [ 1..10 ]
-    |> List.fold (fun acc v -> acc + v) 0
+let folded = [ 1..10 ] |> List.fold (fun acc v -> acc + v) 0
 
 let getTotal items =
     items |> List.fold (fun acc (q, p) -> acc + decimal q * p) 0M
 
 let getTotal2 items =
     (0M, items) ||> List.fold (fun acc (q, p) -> acc + decimal q * p)
-    
+
 let total = getTotal tupleItems
 let total2 = getTotal2 tupleItems
 
 // Group and Uniqueness
-let ungrouped = [ 1; 2; 3; 4; 5; 7; 6; 5; 4; 3; ]
+let ungrouped = [ 1; 2; 3; 4; 5; 7; 6; 5; 4; 3 ]
 
-let gpResult =
-    ungrouped |> List.groupBy id
+let gpResult = ungrouped |> List.groupBy id
 
 let unique items =
-    items
-    |> List.groupBy id
-    |> List.map fst
-    
-let unResult =
-    unique ungrouped
+    items |> List.groupBy id |> List.map fst
 
-let uniqueSet items =
-    items |> Set.ofList
-    
+let unResult = unique ungrouped
+
+let uniqueSet items = items |> Set.ofList
+
 let setResult = uniqueSet ungrouped
 
 // Solving problems in many ways
@@ -123,13 +111,11 @@ let a =
 // Using option and choose
 let b =
     nums
-    |> List.choose (fun v -> if v % 2 = 1 then Some (v * v) else None)
+    |> List.choose (fun v -> if v % 2 = 1 then Some(v * v) else None)
     |> List.sum
 
 // Fold
-let c =
-    nums
-    |> List.fold (fun acc v -> acc + if v % 2 = 1 then (v * v) else 0) 0
+let c = nums |> List.fold (fun acc v -> acc + if v % 2 = 1 then (v * v) else 0) 0
 
 // Reduce
 let d =
@@ -138,6 +124,4 @@ let d =
     | items -> items |> List.reduce (fun acc v -> acc + if v % 2 = 1 then (v * v) else 0)
 
 // The recommended version
-let e =
-    nums
-    |> List.sumBy (fun v -> if v % 2 = 1 then (v * v) else 0)
+let e = nums |> List.sumBy (fun v -> if v % 2 = 1 then (v * v) else 0)

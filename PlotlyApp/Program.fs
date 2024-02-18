@@ -13,23 +13,20 @@ let myFirstChart =
 // myFirstChart |> Chart.show
 
 let stackedBar =
-    let values = [ 50; 30; 10; 10;  ]
+    let values = [ 50; 30; 10; 10 ]
     let keys = [ "NVDA"; "AMD"; "SIE"; "MSFT" ]
     Chart.Column(values = values, Keys = keys, Name = "Weights")
 
 // stackedBar |> Chart.show
 
 let treemapStyled =
-    let labelsParents = [
-        ("NVDA", ""), 50
-        ("AMD", ""), 30; ("SIE", ""), 10; ("MSFT", ""), 10
-    ]
+    let labelsParents = [ ("NVDA", ""), 50; ("AMD", ""), 30; ("SIE", ""), 10; ("MSFT", ""), 10 ]
 
     Chart.Treemap(
         labelsparents = (labelsParents |> Seq.map fst),
         Values = (labelsParents |> Seq.map snd),
         BranchValues = StyleParam.BranchValues.Total,
-        SectionColorScale = StyleParam.Colorscale.Greens, 
+        SectionColorScale = StyleParam.Colorscale.Greens,
         ShowSectionColorScale = true,
         SectionOutlineColor = Color.fromKeyword Black,
         Tiling = TreemapTiling.init (Packing = StyleParam.TreemapTilingPacking.Squarify)

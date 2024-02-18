@@ -32,11 +32,21 @@ let yesterday = (getTheCurrentTime ()).AddDays(-1)
 printfn $"{now} and {yesterday}"
 
 // Records
-type Address = { Line1: string; Line2: string; City: string; Country: string }
+type Address = {
+    Line1: string
+    Line2: string
+    City: string
+    Country: string
+}
 
 type Person = { Name: string * string; Address: Address }
 
-let theAddress = { Line1 = "1st Street"; Line2 = "Apt. 1"; City = "London"; Country = "UK" }
+let theAddress = {
+    Line1 = "1st Street"
+    Line2 = "Apt. 1"
+    City = "London"
+    Country = "UK"
+}
 
 let addressInDE = { theAddress with City = "Berlin"; Country = "DE" }
 
@@ -81,11 +91,21 @@ let multiply5And6 = executeCalculation multiply "multiply" 5 6
 // let calculation = executeCalculation writeToFile 10 20
 
 // Functional Collection pipelines
-type Result = { HomeTeam: string; HomeGoals: int; AwayTeam: string; AwayGoals: int }
+type Result = {
+    HomeTeam: string
+    HomeGoals: int
+    AwayTeam: string
+    AwayGoals: int
+}
 
 type TeamSummary = { Name: string; mutable AwayWins: int }
 
-let create home hg away ag = { HomeTeam = home; HomeGoals = hg; AwayTeam = away; AwayGoals = ag }
+let create home hg away ag = {
+    HomeTeam = home
+    HomeGoals = hg
+    AwayTeam = away
+    AwayGoals = ag
+}
 
 let results = [
     create "Messiville" 1 "Ronaldo City" 2
@@ -149,9 +169,17 @@ let description =
     | _ -> "Some modifier was pressed"
 
 
-type CustomerDetails = { YearsOfHistory: int; HasOverdraft: bool; Overdraft: decimal }
+type CustomerDetails = {
+    YearsOfHistory: int
+    HasOverdraft: bool
+    Overdraft: decimal
+}
 
-let customerDetailsRecord = { YearsOfHistory = 1; HasOverdraft = true; Overdraft = 400m }
+let customerDetailsRecord = {
+    YearsOfHistory = 1
+    HasOverdraft = true
+    Overdraft = 400m
+}
 
 let overdraftLimit (customerDetails: CustomerDetails) =
     (customerDetails.YearsOfHistory |> decimal) * 250.0m > customerDetails.Overdraft
@@ -169,11 +197,19 @@ let canTakeOutALoanRecord =
 printfn $"Customer is eligible for loan {canTakeOutALoanRecord}"
 // Look at sth called 'Active Patterns' to simplify more complex matching
 
-type OverdraftDetails = { Approved: bool; MaxAmount: decimal; CurrentAmount: decimal }
+type OverdraftDetails = {
+    Approved: bool
+    MaxAmount: decimal
+    CurrentAmount: decimal
+}
 
 type CustomerAddress = { Country: string }
 
-type CustomerWithOverdraft = { YearsOfHistory: int; Overdraft: OverdraftDetails; Address: CustomerAddress }
+type CustomerWithOverdraft = {
+    YearsOfHistory: int
+    Overdraft: OverdraftDetails
+    Address: CustomerAddress
+}
 
 let canTakeOutALoanRecursive (customer: CustomerWithOverdraft) =
     match customer with
@@ -222,7 +258,13 @@ type TelephoneNumber =
 type ContactMethod =
     | Email of address: string
     | Telephone of country: string * number: string
-    | Post of {| Line1: string; Line2: string; City: string; Country: string |}
+    | Post of
+        {|
+            Line1: string
+            Line2: string
+            City: string
+            Country: string
+        |}
     | Sms of TelephoneNumber
 
 type Customer = { Name: string; Age: int; ContactMethod: ContactMethod }
@@ -278,108 +320,106 @@ type Email = Email of address: string
 type ValidatedEmail = ValidatedEmail of Email
 
 let validateEmail (Email address) =
-    if not (address.Contains "@") then failwith "Invalid email" else ValidatedEmail(Email address)
+    if not (address.Contains "@") then
+        failwith "Invalid email"
+    else
+        ValidatedEmail(Email address)
 
-type Programmer = {
-    Username: string
-    Age: int
-}
+type Programmer = { Username: string; Age: int }
 
-let krake747 = {
-    Username = "krake747"
-    Age = 30
-}
+let krake747 = { Username = "krake747"; Age = 30 }
 
-let getAge programmer =
-    programmer.Age
-    
+let getAge programmer = programmer.Age
+
 let classifyAge age =
     match age with
     | age when age < 18 -> "Child"
     | age when age < 65 -> "Adult"
     | _ -> "Senior"
-    
+
 let optionalClassification =
-    Some krake747
-    |> Option.map getAge
-    |> Option.map classifyAge
-    
+    Some krake747 |> Option.map getAge |> Option.map classifyAge
+
 printfn $"{optionalClassification}"
 
 type CustomerId = CustomerId of string
 type Name = Name of string
 type Street = Street of string
 type City = City of string
-type Country = Domestic | Foreign of string
+
+type Country =
+    | Domestic
+    | Foreign of string
+
 type AccountBalance = AccountBalance of decimal
 
 type RawCustomer = {
-    CustomerId : string
-    Name : string
-    Street : string
-    City : string
-    Country : string
-    AccountBalance : decimal
+    CustomerId: string
+    Name: string
+    Street: string
+    City: string
+    Country: string
+    AccountBalance: decimal
 }
 
 type Customer2 = {
-    Id : CustomerId
-    Name : Name
-    Address : {|
-        Street : Street
-        City : City
-        Country : Country
-    |}
-    Balance : AccountBalance
+    Id: CustomerId
+    Name: Name
+    Address: {| Street: Street; City: City; Country: Country |}
+    Balance: AccountBalance
 }
 
 type CustomerValidationError2 =
     | InvalidCustomerId of string
     | InvalidName of string
     | InvalidCountry of string
-    
+
 type CustomValidationFunc = string -> Result<CustomerId, CustomerValidationError2>
-    
-let validateCustomerId (cId:string) =
-    if cId.StartsWith "C" then Ok (CustomerId cId[1..])
-    else Error (InvalidCustomerId $"Invalid Customer Id '{cId}'.") 
+
+let validateCustomerId (cId: string) =
+    if cId.StartsWith "C" then
+        Ok(CustomerId cId[1..])
+    else
+        Error(InvalidCustomerId $"Invalid Customer Id '{cId}'.")
 
 type CustomerIdError =
     | EmptyId
     | InvalidIdFormat
-    
+
 type NameError =
     | NoNameSupplied
     | TooManyParts
-type CountryError =
-    | NoCountrySupplied
+
+type CountryError = | NoCountrySupplied
+
 type CustomerValidationError =
     | CustomerIdError of CustomerIdError
     | NameError of NameError
     | CountryError of CountryError
-    
-type ValidateCustomerId = string -> Result<CustomerId, CustomerIdError> 
-type ValidateName = string -> Result<CustomerId, NameError> 
-type ValidateCountry = string -> Result<CustomerId, CountryError> 
+
+type ValidateCustomerId = string -> Result<CustomerId, CustomerIdError>
+type ValidateName = string -> Result<CustomerId, NameError>
+type ValidateCountry = string -> Result<CustomerId, CountryError>
 type ValidationRawCustomer = RawCustomer -> Result<Customer, CustomerValidationError>
 
 
 type ShippingStatus =
-    | Fulfilled of {| FulfilledOn : DateTime; PaidOn : DateTime option |}
-    | Outstanding of {| DueOn : DateTime |}
-    
+    | Fulfilled of {| FulfilledOn: DateTime; PaidOn: DateTime option |}
+    | Outstanding of {| DueOn: DateTime |}
+
 type Order = {
-    Id : int
-    PlacedOn : DateTime
-    Status : ShippingStatus
-    Items : (string * decimal) list
+    Id: int
+    PlacedOn: DateTime
+    Status: ShippingStatus
+    Items: (string * decimal) list
 }
+
 let order = {
     Id = 123
     PlacedOn = DateTime(2022, 10, 1)
     Status = Outstanding {| DueOn = DateTime(2022, 10, 3) |}
     Items = [ "F# In Action book", 40M; "New Laptop", 500M ]
 }
-let totalValue order = order.Items |> List.sumBy snd 
-printfn $"Order {order.Id} has a value of {totalValue order}" 
 
+let totalValue order = order.Items |> List.sumBy snd
+printfn $"Order {order.Id} has a value of {totalValue order}"

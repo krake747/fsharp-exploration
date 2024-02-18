@@ -42,22 +42,22 @@ module Views =
 // ---------------------------------
 
 let indexHandler (name: string) =
-    let greetings = $"Hello {name}, from Giraffe!" 
+    let greetings = $"Hello {name}, from Giraffe!"
     let model = { Text = greetings }
     let view = Views.index model
     htmlView view
-    
-let personHandler (person: string) =
-    json { Text = person }
+
+let personHandler (person: string) = json { Text = person }
 
 let webApp =
     choose [
-        GET >=>
-            choose [
-                route "/" >=> indexHandler "world"; routef "/hello/%s" indexHandler
-                route "/person" >=> personHandler "world";
-            ]
-            setStatusCode 404 >=> text "Not Found"
+        GET
+        >=> choose [
+            route "/" >=> indexHandler "world"
+            routef "/hello/%s" indexHandler
+            route "/person" >=> personHandler "world"
+        ]
+        setStatusCode 404 >=> text "Not Found"
     ]
 
 // ---------------------------------
@@ -81,14 +81,13 @@ let configureCors (builder: CorsPolicyBuilder) =
 
 let configureApp (app: IApplicationBuilder) =
     let env = app.ApplicationServices.GetService<IWebHostEnvironment>()
+
     let app =
         match env.IsDevelopment() with
-         | true -> app.UseDeveloperExceptionPage()
-         | false -> app.UseGiraffeErrorHandler(errorHandler).UseHttpsRedirection()
-    
-    app.UseCors(configureCors)
-        .UseStaticFiles()
-        .UseGiraffe(webApp)
+        | true -> app.UseDeveloperExceptionPage()
+        | false -> app.UseGiraffeErrorHandler(errorHandler).UseHttpsRedirection()
+
+    app.UseCors(configureCors).UseStaticFiles().UseGiraffe(webApp)
 
 let configureServices (services: IServiceCollection) =
     services.AddCors() |> ignore
@@ -102,7 +101,8 @@ let main args =
     let contentRoot = Directory.GetCurrentDirectory()
     let webRoot = Path.Combine(contentRoot, "WebRoot")
 
-    Host.CreateDefaultBuilder(args)
+    Host
+        .CreateDefaultBuilder(args)
         .ConfigureWebHostDefaults(fun webHostBuilder ->
             webHostBuilder
                 .UseContentRoot(contentRoot)

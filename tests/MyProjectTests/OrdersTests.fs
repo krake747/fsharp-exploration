@@ -17,10 +17,15 @@ module ``add multiple items to an order`` =
     [<Fact>]
     let ``when product does not exist in non empty order`` () =
         let myOrder = { Id = 1; Items = [ { ProductId = 1; Quantity = 1 } ] }
-        let expected = { Id = 1; Items = [ { ProductId = 1; Quantity = 1 }; { ProductId = 2; Quantity = 5 } ] }
+
+        let expected = {
+            Id = 1
+            Items = [ { ProductId = 1; Quantity = 1 }; { ProductId = 2; Quantity = 5 } ]
+        }
+
         let actual = myOrder |> addItem { ProductId = 2; Quantity = 5 }
         actual |> should equal expected
-        
+
     [<Fact>]
     let ``when product exists in non empty order`` () =
         let myOrder = { Id = 1; Items = [ { ProductId = 1; Quantity = 1 } ] }
@@ -29,30 +34,46 @@ module ``add multiple items to an order`` =
         actual |> should equal expected
 
 module ``Add multiple items to an order`` =
-    
+
     [<Fact>]
     let ``when new products are added to an order`` () =
         let myEmptyOrder = { Id = 1; Items = [] }
-        let expected = { Id = 1; Items = [ { ProductId = 1; Quantity = 1 }; { ProductId = 2; Quantity = 5 } ] }
-        let actual = myEmptyOrder |> addItems [ { ProductId = 1; Quantity = 1 }; { ProductId = 2; Quantity = 5 }; ]
+
+        let expected = {
+            Id = 1
+            Items = [ { ProductId = 1; Quantity = 1 }; { ProductId = 2; Quantity = 5 } ]
+        }
+
+        let actual =
+            myEmptyOrder
+            |> addItems [ { ProductId = 1; Quantity = 1 }; { ProductId = 2; Quantity = 5 } ]
+
         actual |> should equal expected
-        
+
     [<Fact>]
     let ``when new products and updated existing to order`` () =
         let myOrder = { Id = 1; Items = [ { ProductId = 1; Quantity = 1 } ] }
-        let expected = { Id = 1; Items = [ { ProductId = 1; Quantity = 2 }; { ProductId = 2; Quantity = 5 }] }
-        let actual = myOrder |> addItems [ { ProductId = 1; Quantity = 1 }; { ProductId = 2; Quantity = 5 } ]
+
+        let expected = {
+            Id = 1
+            Items = [ { ProductId = 1; Quantity = 2 }; { ProductId = 2; Quantity = 5 } ]
+        }
+
+        let actual =
+            myOrder
+            |> addItems [ { ProductId = 1; Quantity = 1 }; { ProductId = 2; Quantity = 5 } ]
+
         actual |> should equal expected
 
 module ``Removing a product`` =
-    
+
     [<Fact>]
     let ``when remove all items of existing product id`` () =
         let myOrder = { Id = 1; Items = [ { ProductId = 1; Quantity = 1 } ] }
         let expected = { Id = 1; Items = [] }
         let actual = myOrder |> removeProduct 1
         actual |> should equal expected
-        
+
     [<Fact>]
     let ``should do nothing for non existent product id`` () =
         let myOrder = { Id = 2; Items = [ { ProductId = 1; Quantity = 1 } ] }
@@ -61,7 +82,7 @@ module ``Removing a product`` =
         actual |> should equal expected
 
 module ``Reduce item quantity`` =
-    
+
     [<Fact>]
     let ``reduce existing item quantity`` () =
         let myOrder = { Id = 1; Items = [ { ProductId = 1; Quantity = 5 } ] }
@@ -91,7 +112,7 @@ module ``Reduce item quantity`` =
         actual |> should equal expected
 
 module ``Empty an order of all items`` =
-    
+
     [<Fact>]
     let ``order with existing item`` () =
         let myOrder = { Id = 1; Items = [ { ProductId = 1; Quantity = 1 } ] }
