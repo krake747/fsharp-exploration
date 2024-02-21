@@ -2,26 +2,24 @@
 
 [<AutoOpen>]
 module Option =
-    
+
     type OptionBuilder() =
         // Supports let!
         member _.Bind(x, f) = Option.bind f x
 
         // Supports return
         member _.Return(x) = Some x
-        
+
         // Supports return!
         member _.ReturnFrom(x) = x
-    
+
     let option = OptionBuilder()
 
 module OptionDemo =
-    
-    let multiply x y =
-        x * y
-    
-    let divide x y =
-        if y = 0 then None else Some (x / y)
+
+    let multiply x y = x * y
+
+    let divide x y = if y = 0 then None else Some(x / y)
 
     // let calculate x y =
     //     divide x y

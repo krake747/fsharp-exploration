@@ -6,13 +6,17 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="OptionDemo.fs" />
-        <Compile Include="ResultDemo.fs" />
-        <Compile Include="Program.fs"/>
+        <Compile Include="OptionDemo.fs"/>
+        <Compile Include="ResultDemo.fs"/>
+        <Compile Include="AsyncDemo.fs" />
+        <Compile Include="AsyncResultDemo.fs" />
+        <Compile Include="AsyncResultDemoTests.fs" />
+        <Compile Include="Program.fs" />
+        <Content Include="resources\customers.csv"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="FsToolkit.ErrorHandling" Version="4.15.1" />
+        <PackageReference Include="FsToolkit.ErrorHandling" Version="4.15.1"/>
     </ItemGroup>
 
 </Project>
