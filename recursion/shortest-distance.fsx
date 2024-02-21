@@ -16,45 +16,53 @@ let loadData path =
     |> fun rows -> [
         for row in rows do
             match row.Split(",") with
-            | [|start;finish;distance|] -> 
+            | [| start; finish; distance |] ->
                 { Start = start; Finish = finish; Distance = int distance }
                 { Start = finish; Finish = start; Distance = int distance }
             | _ -> failwith "Row is badly formed"
     ]
-    |> List.groupBy (fun cn -> cn.Start)
+    |> List.groupBy (_.Start)
     |> Map.ofList
 
 // Find possible routes
 let getUnvisited connections current =
     connections
     |> List.filter (fun cn -> current.Route |> List.exists (fun loc -> loc = cn.Finish) |> not)
-    |> List.map (fun cn -> { 
+    |> List.map (fun cn -> {
         Location = cn.Finish
         Route = cn.Start :: current.Route
         TotalDistance = cn.Distance + current.TotalDistance
     })
 
 let rec treeToList tree =
-    match tree with 
-    | Leaf x -> [x]
-    | Branch (_, xs) -> List.collect treeToList (xs |> Seq.toList)
+    match tree with
+    | Leaf x -> [ x ]
+    | Branch(_, xs) -> List.collect treeToList (xs |> Seq.toList)
 
-let findPossibleRoutes start finish (routeMap:Map<string, Connection list>) =
+let findPossibleRoutes start finish (routeMap: Map<string, Connection list>) =
     let rec loop current =
         let nextRoutes = getUnvisited routeMap[current.Location] current
+
         if nextRoutes |> List.isEmpty |> not && current.Location <> finish then
-            Branch (current, seq { for next in nextRoutes do loop next })
-        else 
+            Branch(
+                current,
+                seq {
+                    for next in nextRoutes do
+                        loop next
+                }
+            )
+        else
             Leaf current
+
     loop { Location = start; Route = []; TotalDistance = 0 }
     |> treeToList
     |> List.filter (fun wp -> wp.Location = finish)
- 
+
 let selectShortestRoute routes =
-    routes 
+    routes
     |> List.minBy (_.TotalDistance)
     |> fun wp -> wp.Location :: wp.Route |> List.rev, wp.TotalDistance
-    
+
 let run start finish =
     Path.Combine(__SOURCE_DIRECTORY__, "resources", "data.csv")
     |> loadData
