@@ -59,6 +59,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "recursion", "recursion", "{D285F4F9-A0C3-4177-8E64-83BFB5E578E9}"
 	ProjectSection(SolutionItems) = preProject
 		recursion\factorial.fsx = recursion\factorial.fsx
+		recursion\shortest-distance.fsx = recursion\shortest-distance.fsx
 	EndProjectSection
 EndProject
 Global
