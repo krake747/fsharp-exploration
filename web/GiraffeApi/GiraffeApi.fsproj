@@ -6,6 +6,7 @@
 
     <ItemGroup>
         <Compile Include="TodoStore.fs"/>
+        <Compile Include="Todos.fs"/>
         <Compile Include="Program.fs"/>
     </ItemGroup>
 

@@ -27,5 +27,7 @@ type TodoStore() =
         data.TryUpdate(todo.Id, todo, data[todo.Id])
 
     member _.DeleteById(id) = data.TryRemove(id)
+
     member _.GetById(id) = get id
+
     member _.GetAll() = data.Values |> Seq.toArray
