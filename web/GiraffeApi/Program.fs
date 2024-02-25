@@ -47,6 +47,9 @@ let main args =
 
     configureApp app
 
+    let store = app.Services.GetRequiredService<TodoStore>()
+    Todos.Data.todoList |> List.map store.Create |> ignore
+    
     // app.MapGet("/", Func<string>(fun () -> "Hello World!")) |> ignore
 
     app.Run()
