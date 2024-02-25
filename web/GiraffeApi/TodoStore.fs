@@ -21,13 +21,13 @@ type TodoStore() =
         let success, value = data.TryGetValue(id)
         if success then Some value else None
 
-    member _.Create(todo) = data.TryAdd(todo.Id, todo)
+    member _.Create todo = data.TryAdd(todo.Id, todo)
 
-    member _.Update(todo) =
-        data.TryUpdate(todo.Id, todo, data[todo.Id])
+    member _.Update id todo =
+        data.TryUpdate(id, todo, data[id])
 
-    member _.DeleteById(id) = data.TryRemove(id)
+    member _.DeleteById id = data.TryRemove(id)
 
-    member _.GetById(id) = get id
+    member _.GetById id = get id
 
-    member _.GetAll() = data.Values |> Seq.toArray
+    member _.GetAll () = data.Values |> Seq.toArray

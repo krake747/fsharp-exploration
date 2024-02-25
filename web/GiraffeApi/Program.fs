@@ -9,18 +9,16 @@ open Giraffe.ViewEngine
 open GiraffeApi
 
 let indexView =
-    html [] [
-        head [] [ title [] [ str "Giraffe Todo Api" ] ]
-        body [] [
-            h1 [] [ str "I |> F#" ]
-            p [] [ str "Hello Todo Web API from the Giraffe View Engine" ]
-        ]
+    [
+        h1 [] [ str "I |> F#" ]
+        p [ _class "some-css-class"; _id "someId" ] [ str "Hello Todo Web API from the Giraffe View Engine" ]
     ]
+    |> Shared.masterPage "Giraffe View Engine"
 
 let apiRoutes = [ GET [ route "" (json {| Response = "Hello world!!" |}) ] ]
 
 let endpoints = [
-    GET [ route "/" (htmlView indexView) ]
+    GET [ route "/" (htmlView (Todos.Views.todoView Todos.Data.todoList)) ]
     subRoute "api/todo" Todos.apiTodoRoutes
     subRoute "/api" apiRoutes
 ]
@@ -28,15 +26,12 @@ let endpoints = [
 let notFoundHandler = "Not Found" |> text |> RequestErrors.notFound
 
 let configureServices (services: IServiceCollection) =
-    services
-        .AddRouting()
-        .AddGiraffe()
-        .AddSingleton(TodoStore())
-    |> ignore
+    services.AddRouting().AddGiraffe().AddSingleton(TodoStore()) |> ignore
 
 let configureApp (appBuilder: IApplicationBuilder) =
     appBuilder
         .UseRouting()
+        .UseStaticFiles()
         .UseGiraffe(endpoints)
         .UseGiraffe(notFoundHandler)
 
