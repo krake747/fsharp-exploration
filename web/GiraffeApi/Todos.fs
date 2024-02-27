@@ -70,16 +70,14 @@ module Handlers =
             task {
                 let! updateTodo = ctx.BindJsonAsync<Todo>()
                 let store = ctx.GetService<TodoStore>()
-                
-                let updated =
-                    match (store.GetById id) with
-                    | Some value -> { value with Description = updateTodo.Description }
-                    | _ -> failwith "Not found"
 
                 return!
-                    (match store.Update id updated with
-                     | true -> json true
-                     | false -> RequestErrors.GONE "Gone")
+                    (match (store.GetById id) with
+                     | Some value ->
+                         match store.Update id { value with Description = updateTodo.Description } with
+                         | true -> json true
+                         | false -> RequestErrors.GONE "Gone"
+                     | _ -> RequestErrors.NOT_FOUND "Not found")
                         next
                         ctx
             }
